@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coworking Space - Ish joyini bron qiling</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🏢</span>
+                <span class="logo-text">CoworkHub</span>
+            </div>
+            <div class="nav-menu">
+                <button class="nav-btn" id="homeBtn">Bosh sahifa</button>
+                <button class="nav-btn" id="zonesBtn">Zonalar</button>
+                <button class="nav-btn" id="myBookingsBtn">Mening bronlarim</button>
+                <button class="nav-btn auth-btn" id="loginBtn">Kirish</button>
+                <button class="nav-btn auth-btn hidden" id="logoutBtn">Chiqish</button>
+                <button class="nav-btn admin-btn hidden" id="adminBtn">Admin panel</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section" id="heroSection">
+            <div class="particles" id="particles"></div>
+            <div class="hero-content">
+                <div class="hero-left">
+                    <h1 class="hero-title">Ish joyingizni bugun bron qiling</h1>
+                    <p class="hero-subtitle">Zamonaviy coworking zonalar, qulay sharoitlar va mos narxlar</p>
+                    <button class="hero-btn" id="startBookingBtn">Boshlash</button>
+                </div>
+                <div class="hero-right">
+                    <div class="hero-image-container">
+                        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200" alt="Coworking Space" class="hero-image">
+                        <div class="floating-badge badge-1">
+                            <span class="badge-icon">⚡️</span>
+                            <span class="badge-text">1 Gb/s Internet</span>
+                        </div>
+                        <div class="floating-badge badge-2">
+                            <span class="badge-icon">☕️</span>
+                            <span class="badge-text">Bepul Kofe</span>
+                        </div>
+                        <div class="floating-badge badge-3">
+                            <span class="badge-icon">🟢</span>
+                            <span class="badge-text">12 ta bo'sh o'rin</span>
+                        </div>
+                        <div class="floating-badge badge-4">
+                            <span class="badge-icon">🔒</span>
+                            <span class="badge-text">Xavfsiz</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zones Section -->
+        <section class="zones-section hidden" id="zonesSection">
+            <h2 class="section-title">Mavzon zonalar</h2>
+            <div class="zones-grid" id="zonesGrid">
+                <!-- Zones will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- My Bookings Section -->
+        <section class="bookings-section hidden" id="bookingsSection">
+            <h2 class="section-title">Mening bronlarim</h2>
+            <div class="bookings-list" id="bookingsList">
+                <!-- Bookings will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Admin Section -->
+        <section class="admin-section hidden" id="adminSection">
+            <h2 class="section-title">Admin Panel</h2>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="allBookings">Barcha bronlar</button>
+                <button class="admin-tab" data-tab="allUsers">Foydalanuvchilar</button>
+                <button class="admin-tab" data-tab="zones">Zonalar</button>
+            </div>
+            <div class="admin-content">
+                <div class="admin-tab-content active" id="allBookingsTab">
+                    <div class="bookings-list" id="adminBookingsList"></div>
+                </div>
+                <div class="admin-tab-content" id="allUsersTab">
+                    <div class="users-list" id="usersList"></div>
+                </div>
+                <div class="admin-tab-content" id="zonesTab">
+                    <div class="zones-grid" id="adminZonesGrid"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay hidden" id="loginModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">Tizimga kirish</h3>
+                <button class="modal-close" id="closeLoginModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Parol</label>
+                        <input type="password" class="form-input" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="form-btn">Kirish</button>
+                </form>
+                <p class="form-footer">
+                    Hisobingiz yo'qmi? <a href="#" class="form-link" id="showRegisterBtn">Ro'yxatdan o'ting</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay hidden" id="registerModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title">Ro'yxatdan o'tish</h3>
+                <button class="modal-close" id="closeRegisterModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label class="form-label">Ism</label>
+                        <input type="text" class="form-input" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Parol</label>
+                        <input type="password" class="form-input" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="form-btn">Ro'yxatdan o'tish</button>
+                </form>
+                <p class="form-footer">
+                    Hisobingiz bormi? <a href="#" class="form-link" id="showLoginBtn">Tizimga kiring</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal-overlay hidden" id="bookingModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 class="modal-title" id="bookingModalTitle">Bron qilish</h3>
+                <button class="modal-close" id="closeBookingModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="bookingForm">
+                    <input type="hidden" id="bookingZoneId">
+                    <div class="booking-info">
+                        <p class="info-label">Zona:</p>
+                        <p class="info-value" id="bookingZoneName">-</p>
+                    </div>
+                    <div class="booking-info">
+                        <p class="info-label">Narx:</p>
+                        <p class="info-value" id="bookingZonePrice">-</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sana</label>
+                        <input type="date" class="form-input" id="bookingDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Vaqt</label>
+                        <select class="form-input" id="bookingTime" required>
+                            <option value="">Vaqtni tanlang</option>
+                            <option value="09:00">09:00 - 10:00</option>
+                            <option value="10:00">10:00 - 11:00</option>
+                            <option value="11:00">11:00 - 12:00</option>
+                            <option value="12:00">12:00 - 13:00</option>
+                            <option value="13:00">13:00 - 14:00</option>
+                            <option value="14:00">14:00 - 15:00</option>
+                            <option value="15:00">15:00 - 16:00</option>
+                            <option value="16:00">16:00 - 17:00</option>
+                            <option value="17:00">17:00 - 18:00</option>
+                        </select>
+                    </div>
+                    <div class="booking-total">
+                        <p class="total-label">Jami narx:</p>
+                        <p class="total-value" id="bookingTotalPrice">0 so'm</p>
+                    </div>
+                    <button type="submit" class="form-btn">Bron qilish</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal-overlay hidden" id="paymentModal">
+        <div class="modal-card payment-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">To'lov</h3>
+                <button class="modal-close" id="closePaymentModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-summary">
+                    <div class="payment-info">
+                        <span class="payment-label">Zona:</span>
+                        <span class="payment-value" id="paymentZoneName">-</span>
+                    </div>
+                    <div class="payment-info">
+                        <span class="payment-label">Sana:</span>
+                        <span class="payment-value" id="paymentDate">-</span>
+                    </div>
+                    <div class="payment-info">
+                        <span class="payment-label">Vaqt:</span>
+                        <span class="payment-value" id="paymentTime">-</span>
+                    </div>
+                    <div class="payment-total">
+                        <span class="payment-total-label">Jami to'lov:</span>
+                        <span class="payment-total-value" id="paymentTotalPrice">0 so'm</span>
+                    </div>
+                </div>
+                <div class="payment-methods">
+                    <p class="payment-methods-title">To'lov usulini tanlang:</p>
+                    <div class="payment-methods-grid">
+                        <button class="payment-method-btn click-btn" data-method="click">
+                            <div class="payment-method-icon click-icon">
+                                <span class="click-logo">CLICK</span>
+                            </div>
+                            <span class="payment-method-name">Click</span>
+                        </button>
+                        <button class="payment-method-btn payme-btn" data-method="payme">
+                            <div class="payment-method-icon payme-icon">
+                                <span class="payme-logo">Payme</span>
+                            </div>
+                            <span class="payment-method-name">Payme</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="payment-form hidden" id="paymentForm">
+                    <form id="cardPaymentForm">
+                        <div class="form-group">
+                            <label class="form-label">Karta raqami</label>
+                            <input type="text" class="form-input" id="cardNumber" placeholder="8600 0000 0000 0000" maxlength="19" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Amal qilish muddati</label>
+                                <input type="text" class="form-input" id="cardExpiry" placeholder="MM/YY" maxlength="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">CVV</label>
+                                <input type="text" class="form-input" id="cardCvv" placeholder="***" maxlength="3" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SMS kod</label>
+                            <input type="text" class="form-input" id="smsCode" placeholder="123456" maxlength="6" required>
+                        </div>
+                        <button type="submit" class="form-btn payment-submit-btn">To'lovni amalga oshirish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Receipt Modal -->
+    <div class="modal-overlay hidden" id="receiptModal">
+        <div class="modal-card receipt-modal">
+            <div class="modal-header">
+                <h3 class="modal-title">To'lov cheki</h3>
+                <button class="modal-close" id="closeReceiptModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="receipt-content">
+                    <div class="receipt-success-icon">✓</div>
+                    <h4 class="receipt-title">To'lov muvaffaqiyatli amalga oshirildi!</h4>
+                    <div class="receipt-details">
+                        <div class="receipt-item">
+                            <span class="receipt-label">Bron ID:</span>
+                            <span class="receipt-value" id="receiptBookingId">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Zona:</span>
+                            <span class="receipt-value" id="receiptZoneName">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Sana:</span>
+                            <span class="receipt-value" id="receiptDate">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">Vaqt:</span>
+                            <span class="receipt-value" id="receiptTime">-</span>
+                        </div>
+                        <div class="receipt-item">
+                            <span class="receipt-label">To'lov usuli:</span>
+                            <span class="receipt-value" id="receiptPaymentMethod">-</span>
+                        </div>
+                        <div class="receipt-total">
+                            <span class="receipt-total-label">Jami to'langan:</span>
+                            <span class="receipt-total-value" id="receiptTotalPrice">0 so'm</span>
+                        </div>
+                    </div>
+                    <button class="form-btn" id="closeReceiptBtn">Yopish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast hidden" id="toast">
+        <span class="toast-message" id="toastMessage"></span>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
